@@ -78,6 +78,10 @@ Answer the key questions from ${CLAUDE_PLUGIN_ROOT}/references/executive_questio
 [3-5 actionable recommendations based on findings]
 ```
 
+### Stage 5: Executive Report
+
+Invoke `customer-base-audit:executive-report` to produce the stakeholder-facing deliverable. The markdown report from Stage 4 is the analytical record; executives get a separate document organized by insight (Pyramid Principle, action titles, 6–8 embedded exhibits) rather than by lens. Output: `executive_report.docx` (or `.pdf`).
+
 ## Smart Defaults
 
 When the user does not specify parameters:
@@ -91,7 +95,8 @@ When the user does not specify parameters:
 ## Output
 
 All results saved to the output directory:
-- `audit_report.md` -- final synthesis report
+- `executive_report.docx` (or `.pdf`) -- insight-organized executive deliverable with embedded exhibits
+- `audit_report.md` -- final synthesis report (analytical record, lens-by-lens)
 - `validation_report.md` -- cross-lens validation results
 - Charts saved as HTML files (Plotly interactive)
 
