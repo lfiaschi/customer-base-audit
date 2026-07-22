@@ -29,3 +29,7 @@ Individual lenses can also be invoked directly: `customer-base-audit:data-prep`,
 ## Runtime Dependencies
 
 Claude installs these as needed: `polars`, `plotly`.
+
+## License
+
+Apache 2.0 — see [LICENSE](LICENSE).
