@@ -42,7 +42,7 @@ uv run ${CLAUDE_PLUGIN_ROOT}/scripts/export_chart_pngs.py <audit-output-dir>
 
 The script normalizes every chart to publication quality regardless of how the lens agents styled it, applying standard data-visualization practice:
 
-- **Typography**: one font family matching the document, base text ≥15px at 1200px render width, consistent title/axis/tick/legend/annotation sizes. Library defaults (12px) are unreadable once embedded at page width.
+- **Typography**: one font family matching the document, sized for the *embedded* width, not the pixel canvas. The rule: chart text must print no smaller than the document's body text. A 1200px-wide chart embedded at ~6.3in shrinks ~2×, so an 11pt-equivalent needs ~22px base font (19px minimum for ticks/legend, 26px chart title). Library defaults (12px ≈ 6pt printed) always fail this.
 - **Recessive scaffolding**: light gridlines, no zerolines, thin outside ticks — the grid recedes behind the data. Text wears ink/gray, never series colors.
 - **Single hue**: recolors all traces (see color discipline below), with color following the *entity* — a series repeated across subplot panels keeps one shade everywhere (matched by name); one-trace-per-panel small multiples are a single entity and wear the accent in every panel; sequential shades only for genuinely distinct ordered series (e.g., cohorts in a stack).
 - **Marks**: line width ≥3, markers ≥8px, a white 1px gap between stacked/adjacent bar fills.
@@ -89,7 +89,7 @@ Fix and re-render until clean. Output files: `executive_report.docx` (or `.pdf`)
 - [ ] All numbers traced to validated metrics JSON
 - [ ] Recommendations tied 1:1 to findings, with horizons and success metrics
 - [ ] Three colors total: ink, gray, one accent — charts share the accent hue
-- [ ] Chart typography consistent and legible at page width (no library-default 12px text)
+- [ ] Chart text prints no smaller than document body text (check the rendered page, not the PNG)
 - [ ] Caveats present in appendix (and inline only where a number would mislead without them)
 - [ ] Final artifact visually verified page by page
 

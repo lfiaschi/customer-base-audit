@@ -124,28 +124,28 @@ def style(fig):
     title in the document carries the message.
     """
     fig.update_layout(
-        font=dict(family=FONT, size=17, color=INK),
-        title=dict(font=dict(family=FONT, size=20, color=MUTED)),
-        legend=dict(font=dict(size=15, color=MUTED), borderwidth=0, bgcolor="rgba(0,0,0,0)",
-                    title_font=dict(size=15, color=MUTED)),
-        margin=dict(l=80, r=40, t=100, b=70),
+        font=dict(family=FONT, size=22, color=INK),
+        title=dict(font=dict(family=FONT, size=26, color=MUTED)),
+        legend=dict(font=dict(size=19, color=MUTED), borderwidth=0, bgcolor="rgba(0,0,0,0)",
+                    title_font=dict(size=19, color=MUTED)),
+        margin=dict(l=90, r=40, t=120, b=80),
         paper_bgcolor="white", plot_bgcolor="white",
     )
     axis_kw = dict(gridcolor=GRID, zeroline=False, linecolor=AXIS, showline=True,
                    ticks="outside", tickcolor=AXIS,
-                   title_font=dict(size=16, color=MUTED), tickfont=dict(size=15, color=MUTED))
+                   title_font=dict(size=21, color=MUTED), tickfont=dict(size=19, color=MUTED))
     fig.update_xaxes(**axis_kw)
     fig.update_yaxes(**axis_kw)
     for a in fig.layout.annotations or ():  # panel titles, callouts
         size = (a.font.size if a.font and a.font.size else 13)
-        a.font = dict(family=FONT, size=max(size, 16), color=a.font.color if a.font and a.font.color else MUTED)
+        a.font = dict(family=FONT, size=max(size, 20), color=a.font.color if a.font and a.font.color else MUTED)
     for t in fig.data:
         if t.type == "scatter" and getattr(t, "line", None) is not None:
             t.line.width = max(t.line.width or 2, 3)
         if t.type == "scatter" and getattr(t, "marker", None) is not None and t.marker.size is not None:
             t.marker.size = max(t.marker.size, 8)
         if getattr(t, "textposition", None) is not None and t.type == "bar":
-            t.textfont = dict(size=14, color=MUTED)
+            t.textfont = dict(size=18, color=MUTED)
 
 
 def main():
