@@ -34,7 +34,7 @@ Every number in the storyline must come from the validated `lens*_metrics.json` 
 - **"So what" line** under each exhibit: one italic sentence connecting the chart to a decision. If you can't write it, the exhibit doesn't belong.
 - **Verify title-chart fit**: the chart must directly show what the title claims — no extrapolation the reader can't see in the picture.
 
-Render charts to static PNGs with the bundled script (extracts figure specs from the saved Plotly HTML files, no recomputation needed):
+Render charts to static PNGs with the bundled script (extracts figure specs from the saved Plotly HTML files, no recomputation needed — and recolors every chart to the report's single hue):
 
 ```bash
 uv run ${CLAUDE_PLUGIN_ROOT}/scripts/export_chart_pngs.py <audit-output-dir>
@@ -47,12 +47,18 @@ uv run ${CLAUDE_PLUGIN_ROOT}/scripts/export_chart_pngs.py <audit-output-dir>
 Structure (in this order — detail always *after* the answer):
 
 1. **Cover** — a title that states the governing thought (not "Customer-Base Audit Report"), the data basis in one line, validation status, date.
-2. **Executive summary (one page)** — SCQA paragraph, a 4-KPI band (the numbers that carry the story: use color — red for risks, green for strengths), the three key messages each with a bolded claim and 2–3 supporting sentences, and a highlighted recommendation box. An executive who stops here has the whole story.
+2. **Executive summary (one page)** — SCQA paragraph, a 4-KPI band with the numbers that carry the story, the three key messages each with a bolded claim and 2–3 supporting sentences, and a highlighted recommendation box. An executive who stops here has the whole story.
 3. **One section per key message** — insight-stating H1, short narrative paragraphs, 2 exhibits each with action title and so-what.
 4. **Recommendations** — a table: action, what-and-why (tied to specific findings), horizon. Add a "measuring success" line with concrete targets.
 5. **Appendix** — method, data limitations and caveats (imputed values, partial periods, censoring — never bury these, but never lead with them either), and a pointer to `audit_report.md` / `validation_report.md` / the full chart set for detail.
 
-Formatting principles: restrained palette (dark ink, one accent color, red/green only for meaning), generous whitespace, page numbers, running header. No dense tables in the body — those live in the appendix or the lens findings.
+**Color discipline — exactly three colors in the whole document:**
+
+- **Ink** (near-black) for all text, headings, and KPI values; **gray** for secondary text (captions, so-whats, labels, reference lines); **one accent hue** for everything that needs emphasis (exhibit labels, the recommendation box, cover kicker).
+- Charts use the *same* accent hue as the document: single series in the accent, multi-series in sequential light-to-dark shades of it (the bundled export script applies this automatically), dashed reference lines in gray, heatmaps in a monochrome scale. Never let the analysis charts' working palettes (viridis, categorical rainbows, per-panel hues) reach the executive document.
+- Nothing is colored for decoration. A second hue is permitted only when it encodes meaning the story depends on — at most once, and it must be named in the exhibit's so-what. If everything is highlighted, nothing is.
+
+Other formatting principles: generous whitespace, page numbers, running header. No dense tables in the body — those live in the appendix or the lens findings.
 
 ## Step 4: Verify Visually
 
@@ -73,6 +79,7 @@ Fix and re-render until clean. Output files: `executive_report.docx` (or `.pdf`)
 - [ ] ≤8 exhibits, each with action title + so-what
 - [ ] All numbers traced to validated metrics JSON
 - [ ] Recommendations tied 1:1 to findings, with horizons and success metrics
+- [ ] Three colors total: ink, gray, one accent — charts share the accent hue
 - [ ] Caveats present in appendix (and inline only where a number would mislead without them)
 - [ ] Final artifact visually verified page by page
 
