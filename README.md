@@ -39,9 +39,24 @@ In Claude Code:
 /plugin install customer-base-audit@customer-base-audit
 ```
 
+## Data Format
+
+Input is a flat transaction file — **CSV, Parquet, or Excel** — with one row per order (or per line item; line items are collapsed to orders automatically when an order ID is present).
+
+| Column | Required? | Common names (auto-detected) | Used for |
+|---|---|---|---|
+| Customer ID | **Required** | `customer_id`, `cust_id`, `user_id`, `buyer_id`, `client_id` | Everything |
+| Transaction date | **Required** | `date`, `order_date`, `transaction_date`, `purchase_date` | Periods, cohorts |
+| Spend | **Required** | `spend`, `revenue`, `amount`, `sales`, `value` | All value metrics |
+| Profit / margin | Optional | `profit`, `total_profit`, `margin_dollars`, `gross_profit` | Profit-based decompositions and deciles (falls back to revenue if absent) |
+| Product category | Optional | `category`, `product_category`, `product`, `sku` | Product-dimension lens (skipped if absent) |
+| Order ID | Optional | `order_id`, `transaction_id`, `invoice_id` | Collapsing line-item data to orders |
+
+Other column names work too — data prep maps them interactively. History length matters more than row count: the cohort lenses need **at least ~1 year of data, ideally 2+** (granularity auto-selects quarterly for 2+ years, monthly otherwise).
+
 ## How to Use
 
-Invoke `customer-base-audit:full-audit` with a path to transaction data (CSV, Parquet, or Excel). Minimum columns: customer ID, transaction date, spend; profit, product category, and order ID unlock the deeper analyses. Claude orchestrates the full pipeline — data preparation, parallel lens analysis, cross-validation — and writes `audit_report.md` plus interactive Plotly charts to an output directory.
+Invoke `customer-base-audit:full-audit` with a path to your transaction file. Claude orchestrates the full pipeline — data preparation with quality gates, parallel lens analysis, cross-validation — and writes `audit_report.md` plus interactive Plotly charts to an output directory.
 
 Each lens skill can also be invoked directly for a targeted analysis (see table above).
 
