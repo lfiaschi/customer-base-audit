@@ -1,0 +1,17 @@
+{
+  "name": "customer-base-audit",
+  "description": "Customer-base audit plugin for Claude Code — five-lens analysis of transaction data (Fader, Hardie & Ross)",
+  "owner": {
+    "name": "Luca Fiaschi",
+    "email": "luca@riseaiconsulting.com"
+  },
+  "plugins": [
+    {
+      "name": "customer-base-audit",
+      "source": "./",
+      "description": "Customer-base audit framework based on Fader, Hardie & Ross — five-lens analysis of transaction data",
+      "category": "analytics",
+      "keywords": ["customer-base-audit", "cohort-analysis", "customer-analytics"]
+    }
+  ]
+}
