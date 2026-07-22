@@ -34,11 +34,20 @@ Every number in the storyline must come from the validated `lens*_metrics.json` 
 - **"So what" line** under each exhibit: one italic sentence connecting the chart to a decision. If you can't write it, the exhibit doesn't belong.
 - **Verify title-chart fit**: the chart must directly show what the title claims — no extrapolation the reader can't see in the picture.
 
-Render charts to static PNGs with the bundled script (extracts figure specs from the saved Plotly HTML files, no recomputation needed — and recolors every chart to the report's single hue):
+Render charts to static PNGs with the bundled script (extracts figure specs from the saved Plotly HTML files, no recomputation needed):
 
 ```bash
 uv run ${CLAUDE_PLUGIN_ROOT}/scripts/export_chart_pngs.py <audit-output-dir>
 ```
+
+The script normalizes every chart to publication quality regardless of how the lens agents styled it, applying standard data-visualization practice:
+
+- **Typography**: one font family matching the document, base text ≥15px at 1200px render width, consistent title/axis/tick/legend/annotation sizes. Library defaults (12px) are unreadable once embedded at page width.
+- **Recessive scaffolding**: light gridlines, no zerolines, thin outside ticks — the grid recedes behind the data. Text wears ink/gray, never series colors.
+- **Single hue**: recolors all traces (see color discipline below), with color following the *entity* — a series repeated across subplot panels keeps one shade everywhere (matched by name); one-trace-per-panel small multiples are a single entity and wear the accent in every panel; sequential shades only for genuinely distinct ordered series (e.g., cohorts in a stack).
+- **Marks**: line width ≥3, markers ≥8px, a white 1px gap between stacked/adjacent bar fills.
+
+If a chart still reads poorly after export (illegible panel, redundant in-chart title fighting the action title, label collisions), fix it at the source or drop it — never embed a substandard exhibit.
 
 ## Step 3: Assemble the Document
 
@@ -80,6 +89,7 @@ Fix and re-render until clean. Output files: `executive_report.docx` (or `.pdf`)
 - [ ] All numbers traced to validated metrics JSON
 - [ ] Recommendations tied 1:1 to findings, with horizons and success metrics
 - [ ] Three colors total: ink, gray, one accent — charts share the accent hue
+- [ ] Chart typography consistent and legible at page width (no library-default 12px text)
 - [ ] Caveats present in appendix (and inline only where a number would mislead without them)
 - [ ] Final artifact visually verified page by page
 
